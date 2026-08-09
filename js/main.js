@@ -59,7 +59,7 @@ function renderHeader(activePage) {
   return `
     <header class="header" id="header">
       <div class="header__inner">
-        <a href="index.html" class="header__logo">Exauce <span>Mazunda</span></a>
+        <a href="index.html" class="header__logo">Monsieur<span>Mazunda</span></a>
         <button class="nav__toggle" id="navToggle" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -79,7 +79,7 @@ function renderFooter() {
       <div class="container">
         <div class="footer__inner">
           <div class="footer__brand">
-            <a href="index.html" class="header__logo" style="color: white;">Exauce <span>Mazunda</span></a>
+            <a href="index.html" class="header__logo" style="color: white;">Monsieur<span>Mazunda</span></a>
             <p>Partager, former et inspirer. Je crée du contenu pour aider les entrepreneurs et professionnels à maîtriser le digital.</p>
           </div>
           <div>
