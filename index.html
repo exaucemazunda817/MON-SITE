@@ -147,7 +147,10 @@
       // Popular resources
       const resources = await fetchJSON('content/resources.json');
       if (resources.length) {
-        const sorted = [...resources].sort((a, b) => (b.downloads + getDownloads(b.id)) - (a.downloads + getDownloads(a.id)));
+        const sorted = [...resources].sort((a, b) =>
+          Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
+          (b.downloads + getDownloads(b.id)) - (a.downloads + getDownloads(a.id))
+        );
         document.getElementById('popular-resources').innerHTML = sorted.slice(0, 3).map(r => createResourceCard(r)).join('');
       }
 

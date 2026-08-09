@@ -45,8 +45,11 @@ function renderResourceCards(resources, container) {
     return { ...r, totalDownloads: r.downloads + localCount };
   });
 
-  // Sort by downloads descending
-  const sorted = [...mergedResources].sort((a, b) => b.totalDownloads - a.totalDownloads);
+  // Featured resources stay at the top, then sort the rest by downloads.
+  const sorted = [...mergedResources].sort((a, b) =>
+    Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
+    b.totalDownloads - a.totalDownloads
+  );
 
   container.innerHTML = sorted.map(r => {
     const downloads = r.totalDownloads;
