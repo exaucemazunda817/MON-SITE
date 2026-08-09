@@ -1,0 +1,32 @@
+[
+  {
+    "id": "fiche-strategie-digitale",
+    "title": "Fiche pratique : Élaborer votre stratégie digitale",
+    "description": "Un guide PDF de 10 pages avec un framework étape par étape pour construire votre stratégie digitale. Inclut des templates et des exemples concrets.",
+    "theme": "Stratégie",
+    "fileName": "strategie-digitale-guide.pdf",
+    "fileSize": "2.4 MB",
+    "downloads": 342,
+    "date": "2025-07-01"
+  },
+  {
+    "id": "checklist-seo",
+    "title": "Checklist SEO : 50 points à vérifier pour votre site",
+    "description": "Une checklist complète pour auditer le référencement de votre site web. Couvrant les aspects techniques, le contenu et les backlinks.",
+    "theme": "SEO",
+    "fileName": "checklist-seo-50-points.pdf",
+    "fileSize": "1.8 MB",
+    "downloads": 518,
+    "date": "2025-06-15"
+  },
+  {
+    "id": "template-calendrier-editorial",
+    "title": "Template de calendrier éditorial pour réseaux sociaux",
+    "description": "Un modèle de calendrier éditorial prêt à l'emploi pour planifier vos publications sur les réseaux sociaux. Format mensuel avec suggestions de types de contenus.",
+    "theme": "Réseaux Sociaux",
+    "fileName": "calendrier-editorial-template.pdf",
+    "fileSize": "1.2 MB",
+    "downloads": 276,
+    "date": "2025-05-20"
+  }
+]

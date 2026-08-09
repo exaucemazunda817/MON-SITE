@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Articles — Exauce Mazunda</title>
+  <meta name="description" content="Retrouvez tous les articles d'Exauce Mazunda sur le marketing digital, le personal branding, l'entrepreneuriat et les nouvelles technologies.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Articles</h1>
+        <p>Réflexions, conseils et guides pratiques pour maîtriser le digital.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="filter-bar" id="articles-filter">
+          <!-- Filters injected by JS -->
+        </div>
+        <div class="grid grid--3" id="articles-list">
+          <div class="loading"><div class="loading__spinner"></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/articles.js"></script>
+  <script>
+    initLayout('articles');
+  </script>
+</body>
+</html>

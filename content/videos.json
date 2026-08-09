@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "introduction-au-marketing-digital",
+    "title": "Introduction au marketing digital — Les fondamentaux",
+    "description": "Dans cette vidéo, je vous présente les concepts clés du marketing digital : SEO, réseaux sociaux, email marketing, publicité en ligne. Une vue d'ensemble pour bien démarrer.",
+    "category": "Marketing Digital",
+    "duration": "18:32",
+    "date": "2025-07-20",
+    "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=450&fit=crop"
+  },
+  {
+    "slug": "creer-son-site-web-sans-coder",
+    "title": "Créer son site web sans coder — Guide complet",
+    "description": "Pas besoin d'être développeur pour avoir un site professionnel. Je vous montre étape par étape comment créer votre site avec les outils no-code disponibles aujourd'hui.",
+    "category": "No-Code",
+    "duration": "25:14",
+    "date": "2025-07-05",
+    "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "thumbnail": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&h=450&fit=crop"
+  },
+  {
+    "slug": "reseaux-sociaux-strategie-contenu",
+    "title": "Réseaux sociaux : construire une stratégie de contenu qui fonctionne",
+    "description": "Comment planifier, créer et publier du contenu sur les réseaux sociaux pour maximiser votre impact ? Je partage ma méthode et mes outils préférés dans cette formation.",
+    "category": "Réseaux Sociaux",
+    "duration": "32:45",
+    "date": "2025-06-18",
+    "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "thumbnail": "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=450&fit=crop"
+  }
+]

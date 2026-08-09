@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ressources & Fiches à télécharger — Exauce Mazunda</title>
+  <meta name="description" content="Téléchargez gratuitement des fiches pratiques, checklists et templates pour développer votre activité digitale.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Ressources gratuites</h1>
+        <p>Des fiches pratiques et templates à télécharger pour passer à l'action.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="filter-bar" id="resources-filter">
+          <!-- Filters injected by JS -->
+        </div>
+        <div id="resources-list" style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-md);">
+          <div class="loading"><div class="loading__spinner"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="newsletter-cta reveal">
+          <h3>Soyez informé des nouvelles ressources</h3>
+          <p>Inscrivez-vous pour recevoir les nouvelles fiches et templates directement dans votre boîte mail.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Merci pour votre inscription ! (Intégration email à configurer)');">
+            <input type="email" placeholder="Votre adresse email" required>
+            <button type="submit">S'inscrire</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/resources.js"></script>
+  <script>
+    initLayout('resources');
+  </script>
+</body>
+</html>

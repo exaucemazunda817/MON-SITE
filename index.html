@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exauce Mazunda — Partager, Former, Inspirer</title>
+  <meta name="description" content="Site personnel d'Exauce Mazunda. Articles, formations vidéo et ressources gratuites pour maîtriser le digital et développer votre activité.">
+  <meta name="author" content="Exauce Mazunda">
+  <meta property="og:title" content="Exauce Mazunda — Partager, Former, Inspirer">
+  <meta property="og:description" content="Articles, formations vidéo et ressources gratuites pour maîtriser le digital.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero__content">
+          <div class="hero__badge">👋 Bienvenue sur mon espace</div>
+          <h1 class="hero__title">Je suis Exauce Mazunda, <span class="highlight">je partage, forme et inspire.</span></h1>
+          <p class="hero__subtitle">Formateur et passionné par la transmission des connaissances, je crée des contenus et des formations pratiques pour vous aider à développer vos compétences.</p>
+          <div class="hero__actions">
+            <a href="articles.html" class="btn btn--primary btn--lg">Lire mes articles</a>
+            <a href="videos.html" class="btn btn--secondary btn--lg">Voir les formations</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dernier Article -->
+    <section class="section" id="latest-article-section">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <h2 class="section-header__title">Dernier article publié</h2>
+          <p class="section-header__subtitle" style="text-align: left;">Mes réflexions sur le domaine biblique</p>
+        </div>
+        <div id="latest-article" class="featured-grid">
+          <div class="loading"><div class="loading__spinner"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dernières Vidéos -->
+    <section class="section section--alt" id="latest-videos-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-header__title">Formations vidéo récentes</h2>
+          <p class="section-header__subtitle">Des formations pratiques pour monter en compétences sur les sujets qui comptent.</p>
+        </div>
+        <div id="latest-videos" class="grid grid--3">
+          <div class="loading"><div class="loading__spinner"></div></div>
+        </div>
+        <div style="text-align: center; margin-top: var(--space-2xl);">
+          <a href="videos.html" class="btn btn--secondary">Voir toutes les formations →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ressources populaires -->
+    <section class="section" id="popular-resources-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-header__title">Ressources les plus téléchargées</h2>
+          <p class="section-header__subtitle">Des fiches pratiques ainsi que des livres gratuits pour vous aider à passer à un autre niveau.</p>
+        </div>
+        <div id="popular-resources" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-md);">
+          <div class="loading"><div class="loading__spinner"></div></div>
+        </div>
+        <div style="text-align: center; margin-top: var(--space-2xl);">
+          <a href="resources.html" class="btn btn--secondary">Voir toutes les ressources →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="newsletter-cta reveal">
+          <h3>Restez informé</h3>
+          <p>Recevez mes derniers articles, vidéos et ressources directement dans votre boîte mail.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Merci pour votre inscription ! (Intégration email à configurer)');">
+            <input type="email" placeholder="Votre adresse email" required>
+            <button type="submit">S'inscrire</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/main.js"></script>
+  <script>
+    initLayout('home');
+
+    // Load home page content
+    (async () => {
+      // Latest article
+      const articles = await fetchJSON('content/articles.json');
+      if (articles.length) {
+        const sorted = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
+        const latest = sorted[0];
+        document.getElementById('latest-article').innerHTML = `
+          <article class="card fade-in" style="grid-column: span 1;">
+            <a href="article.html?slug=${latest.slug}" class="card__image-wrapper">
+              <img src="${latest.image}" alt="${latest.title}" class="card__image" style="height: 280px;" loading="lazy">
+            </a>
+            <div class="card__body">
+              <div class="card__meta">
+                <span class="card__category">${latest.category}</span>
+                <span>${formatDate(latest.date)}</span>
+              </div>
+              <h3 class="card__title" style="font-size: var(--fs-xl);"><a href="article.html?slug=${latest.slug}">${latest.title}</a></h3>
+              <p class="card__excerpt">${latest.excerpt}</p>
+              <div class="card__footer">
+                <span class="badge">${ICONS.clock} ${latest.readTime} min de lecture</span>
+                <a href="article.html?slug=${latest.slug}" class="btn btn--primary btn--sm">Lire l'article →</a>
+              </div>
+            </div>
+          </article>
+          <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+            ${sorted.slice(1, 3).map(a => `
+              <a href="article.html?slug=${a.slug}" class="resource-card" style="text-decoration: none;">
+                <img src="${a.image}" alt="${a.title}" style="width: 80px; height: 80px; border-radius: var(--radius-md); object-fit: cover; flex-shrink: 0;">
+                <div class="resource-card__content">
+                  <span class="card__category" style="margin-bottom: 4px;">${a.category}</span>
+                  <h4 class="resource-card__title">${a.title}</h4>
+                  <span style="font-size: var(--fs-xs); color: var(--color-text-muted);">${formatDate(a.date)} · ${a.readTime} min</span>
+                </div>
+              </a>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Latest videos
+      const videos = await fetchJSON('content/videos.json');
+      if (videos.length) {
+        const sorted = [...videos].sort((a, b) => new Date(b.date) - new Date(a.date));
+        document.getElementById('latest-videos').innerHTML = sorted.slice(0, 3).map(v => createVideoCard(v)).join('');
+      }
+
+      // Popular resources
+      const resources = await fetchJSON('content/resources.json');
+      if (resources.length) {
+        const sorted = [...resources].sort((a, b) => (b.downloads + getDownloads(b.id)) - (a.downloads + getDownloads(a.id)));
+        document.getElementById('popular-resources').innerHTML = sorted.slice(0, 3).map(r => createResourceCard(r)).join('');
+      }
+
+      initReveal();
+    })();
+  </script>
+</body>
+</html>
