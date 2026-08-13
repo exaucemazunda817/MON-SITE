@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MonsieurMazunda — Partager, Former, Inspirer</title>
-  <meta name="description" content="Site personnel d'Exauce Mazunda. Articles, formations vidéo et ressources gratuites pour maîtriser le digital et développer votre activité.">
-  <meta name="author" content="Exauce Mazunda">
+  <meta name="description" content="Site personnel de Monsieur Mazunda. Articles, formations vidéo et ressources gratuites pour maîtriser le digital et développer votre activité.">
+  <meta name="author" content="Monsieur Mazunda">
   <meta property="og:title" content="MonsieurMazunda — Partager, Former, Inspirer">
   <meta property="og:description" content="Articles, formations vidéo et ressources gratuites pour maîtriser le digital.">
   <meta property="og:type" content="website">
@@ -82,10 +82,11 @@
         <div class="newsletter-cta reveal">
           <h3>Restez informé</h3>
           <p>Recevez mes derniers articles, vidéos et ressources directement dans votre boîte mail.</p>
-          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Merci pour votre inscription ! (Intégration email à configurer)');">
-            <input type="email" placeholder="Votre adresse email" required>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" name="email" placeholder="Votre adresse email" required>
             <button type="submit">S'inscrire</button>
           </form>
+          <p id="newsletterMessage" style="margin-top: var(--space-sm); font-size: var(--fs-sm);"></p>
         </div>
       </div>
     </section>
@@ -93,7 +94,7 @@
 
   <div id="site-footer"></div>
 
-  <script src="js/main.js?v=1"></script>
+  <script src="js/main.js?v=9"></script>
   <script>
     initLayout('home');
 

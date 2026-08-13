@@ -1169,6 +1169,7 @@ main {
   line-height: var(--lh-relaxed);
   margin-top: var(--space-md);
   max-width: 300px;
+  text-align: justify;
 }
 
 .footer__title {

@@ -64,7 +64,7 @@ function renderSingleVideo(videos, container) {
   }
 
   // Update page title
-  document.title = `${video.title} — Exauce Mazunda`;
+  document.title = `${video.title} — Monsieur Mazunda`;
 
   const metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.content = video.description;
