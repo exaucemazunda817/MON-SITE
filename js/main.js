@@ -262,7 +262,7 @@ function createVideoCard(video) {
       <a href="video.html?slug=${video.slug}" class="card__image-wrapper">
         <img src="${video.thumbnail}" alt="${video.title}" class="card__image" loading="lazy">
         <div class="play-icon">${ICONS.play}</div>
-        <span class="card__duration">${video.duration}</span>
+        ${video.duration ? `<span class="card__duration">${video.duration}</span>` : ''}
       </a>
       <div class="card__body">
         <div class="card__meta">

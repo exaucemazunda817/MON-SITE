@@ -82,7 +82,7 @@ function renderSingleVideo(videos, container) {
       <div class="article-header__meta" style="margin-bottom: var(--space-md);">
         <span class="card__category">${video.category}</span>
         <span>${ICONS.calendar} ${formatDate(video.date)}</span>
-        <span>${ICONS.clock} ${video.duration}</span>
+        ${video.duration ? `<span>${ICONS.clock} ${video.duration}</span>` : ''}
       </div>
 
       <h1 style="font-size: var(--fs-3xl); margin-bottom: var(--space-lg);">${video.title}</h1>
