@@ -1,0 +1,27 @@
+[
+  {
+    "id": "formations-bureautique-digital",
+    "title": "Formations bureautique & digital",
+    "description": "Word, Excel, PowerPoint et outils numériques, du niveau débutant à intermédiaire, en présentiel ou à distance, individuel ou en groupe."
+  },
+  {
+    "id": "redaction-memoires-tfc",
+    "title": "Rédaction de mémoires & TFC",
+    "description": "Accompagnement complet à la rédaction de travaux de fin de cycle et mémoires, tous domaines confondus, avec méthodologie rigoureuse."
+  },
+  {
+    "id": "conseil-analyse-juridique",
+    "title": "Conseil & analyse juridique",
+    "description": "Analyses et recherches en droit congolais (droit des affaires, droit des sociétés, OHADA, questions administratives et institutionnelles)."
+  },
+  {
+    "id": "accompagnement-entrepreneurial",
+    "title": "Accompagnement entrepreneurial",
+    "description": "Structuration juridique et stratégique de projets et d'entreprises : statuts, gouvernance, organisation, développement d'activité."
+  },
+  {
+    "id": "enseignement-biblique-theologique",
+    "title": "Enseignement biblique & théologique",
+    "description": "Études et formations bibliques et théologiques, pour approfondir sa foi et transmettre les fondamentaux de manière structurée."
+  }
+]

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes services — MonsieurMazunda</title>
+  <meta name="description" content="Découvrez les services de Monsieur Mazunda : formations, rédaction de mémoires, conseil juridique, accompagnement entrepreneurial et enseignement biblique. Réalisations, documents et écrits.">
+  <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Mes services</h1>
+        <p>Ce que je fais et comment je peux vous accompagner.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid--3" id="services-list">
+          <div class="loading"><div class="loading__spinner"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-header__title">Réalisations & publications</h2>
+          <p class="section-header__subtitle">Images, documents et écrits qui illustrent mon travail.</p>
+        </div>
+        <div class="filter-bar" id="portfolio-filter">
+          <!-- Filters injected by JS -->
+        </div>
+        <div id="portfolio-list" style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-md);">
+          <div class="loading"><div class="loading__spinner"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="newsletter-cta reveal">
+          <h3>Une idée de collaboration ?</h3>
+          <p>Contactez-moi pour discuter de votre projet ou pour toute demande liée à mes services.</p>
+          <a href="contact.html" class="btn btn--accent btn--lg">Me contacter</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/main.js?v=9"></script>
+  <script src="js/services.js"></script>
+  <script>
+    initLayout('services');
+  </script>
+</body>
+</html>

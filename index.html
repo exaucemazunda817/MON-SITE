@@ -9,7 +9,7 @@
   <meta property="og:title" content="MonsieurMazunda — Partager, Former, Inspirer">
   <meta property="og:description" content="Articles, formations vidéo et ressources gratuites pour maîtriser le digital.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
 
@@ -18,21 +18,24 @@
   <main>
     <!-- Hero -->
     <section class="hero">
-      <div class="container">
+      <div class="hero__media">
+        <img src="assets/images/monsieur-mazunda.png" alt="Monsieur Mazunda" class="hero__image">
         <div class="hero__content">
-          <div class="hero__badge">👋 Bienvenue sur mon espace</div>
-          <h1 class="hero__title">Je suis Monsieur Mazunda, <span class="highlight">je partage, forme et inspire.</span></h1>
-          <p class="hero__subtitle">Formateur et passionné par la transmission des connaissances, je crée des contenus et des formations pratiques pour vous aider à développer vos compétences.</p>
-          <div class="hero__actions">
-            <a href="articles.html" class="btn btn--primary btn--lg">Lire mes articles</a>
-            <a href="videos.html" class="btn btn--secondary btn--lg">Voir les formations</a>
+          <div class="hero__content-inner">
+            <div class="hero__badge">👋 Bienvenue sur mon espace</div>
+            <h1 class="hero__title">Partager, former, <span class="highlight">inspirer.</span></h1>
+            <p class="hero__subtitle">Formateur et passionné par la transmission des connaissances, je crée des contenus autour de la Bible, du droit et de l'entrepreneuriat.</p>
+            <div class="hero__actions">
+              <a href="articles.html" class="btn btn--accent btn--lg">Lire mes articles</a>
+              <a href="videos.html" class="btn btn--secondary btn--lg">Voir les formations</a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Dernier Article -->
-    <section class="section" id="latest-article-section">
+    <section class="section section--dark" id="latest-article-section">
       <div class="container">
         <div class="section-header section-header--left">
           <h2 class="section-header__title">Dernier article publié</h2>
@@ -77,7 +80,7 @@
     </section>
 
     <!-- Newsletter CTA -->
-    <section class="section">
+    <section class="section section--alt">
       <div class="container">
         <div class="newsletter-cta reveal">
           <h3>Restez informé</h3>
@@ -106,31 +109,29 @@
         const sorted = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
         const latest = sorted[0];
         document.getElementById('latest-article').innerHTML = `
-          <article class="card fade-in" style="grid-column: span 1;">
-            <a href="article.html?slug=${latest.slug}" class="card__image-wrapper">
-              <img src="${latest.image}" alt="${latest.title}" class="card__image" style="height: 280px;" loading="lazy">
-            </a>
-            <div class="card__body">
-              <div class="card__meta">
-                <span class="card__category">${latest.category}</span>
+          <article class="spotlight fade-in">
+            <img src="${latest.image}" alt="${latest.title}" class="spotlight__image" loading="lazy">
+            <div class="spotlight__body">
+              <span class="spotlight__category">${latest.category}</span>
+              <h3 class="spotlight__title"><a href="article.html?slug=${latest.slug}">${latest.title}</a></h3>
+              <p class="spotlight__excerpt">${latest.excerpt}</p>
+              <div class="spotlight__meta">
                 <span>${formatDate(latest.date)}</span>
+                <span>·</span>
+                <span>${latest.readTime} min de lecture</span>
               </div>
-              <h3 class="card__title" style="font-size: var(--fs-xl);"><a href="article.html?slug=${latest.slug}">${latest.title}</a></h3>
-              <p class="card__excerpt">${latest.excerpt}</p>
-              <div class="card__footer">
-                <span class="badge">${ICONS.clock} ${latest.readTime} min de lecture</span>
-                <a href="article.html?slug=${latest.slug}" class="btn btn--primary btn--sm">Lire l'article →</a>
-              </div>
+              <a href="article.html?slug=${latest.slug}" class="btn btn--accent btn--sm spotlight__cta">Lire l'article ${ICONS.arrow}</a>
             </div>
           </article>
-          <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+          <div class="mini-articles">
+            <span class="mini-articles__label">À lire aussi</span>
             ${sorted.slice(1, 3).map(a => `
-              <a href="article.html?slug=${a.slug}" class="resource-card" style="text-decoration: none;">
-                <img src="${a.image}" alt="${a.title}" style="width: 80px; height: 80px; border-radius: var(--radius-md); object-fit: cover; flex-shrink: 0;">
-                <div class="resource-card__content">
-                  <span class="card__category" style="margin-bottom: 4px;">${a.category}</span>
-                  <h4 class="resource-card__title">${a.title}</h4>
-                  <span style="font-size: var(--fs-xs); color: var(--color-text-muted);">${formatDate(a.date)} · ${a.readTime} min</span>
+              <a href="article.html?slug=${a.slug}" class="mini-article">
+                <img src="${a.image}" alt="${a.title}" class="mini-article__image">
+                <div>
+                  <span class="mini-article__category">${a.category}</span>
+                  <h4 class="mini-article__title">${a.title}</h4>
+                  <span class="mini-article__meta">${formatDate(a.date)} · ${a.readTime} min</span>
                 </div>
               </a>
             `).join('')}
