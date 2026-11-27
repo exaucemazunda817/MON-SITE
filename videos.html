@@ -3,40 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formations vidéo — MonsieurMazunda</title>
-  <meta name="description" content="Formations vidéo gratuites par Monsieur Mazunda. Apprenez le marketing digital, le no-code, les réseaux sociaux et bien plus.">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <title>Formations vidéo — Monsieur Mazunda</title>
+  <meta name="description" content="Formations vidéo gratuites de Monsieur Mazunda : études bibliques, droit et entrepreneuriat, à regarder sur le site ou sur YouTube.">
+  <meta name="author" content="Monsieur Mazunda">
+  <meta name="theme-color" content="#2A2FBF">
+  <meta property="og:title" content="Formations vidéo — Monsieur Mazunda">
+  <meta property="og:description" content="Formations vidéo gratuites de Monsieur Mazunda : études bibliques, droit et entrepreneuriat, à regarder sur le site ou sur YouTube.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://monsieurmazunda.site/videos.html">
+  <meta property="og:image" content="https://monsieurmazunda.site/assets/images/portrait.jpg">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/icone-app.svg">
+  <link rel="icon" type="image/png" href="assets/brand/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body>
 
   <div id="site-header"></div>
 
   <main>
-    <section class="page-header">
-      <div class="container">
-        <h1>Formations vidéo</h1>
-        <p>Des formations pratiques pour monter en compétences sur les sujets qui comptent.</p>
+    <section class="band-indigo stripes vlist-hero">
+      <div class="wrap vlist-hero__grid" id="videos-hero">
+        <div>
+          <span class="eyebrow eyebrow--safran">Formations vidéo</span>
+          <h1 class="h1">Apprendre en regardant</h1>
+          <p>Des formations pratiques pour monter en compétences sur les sujets qui comptent.</p>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="filter-bar" id="videos-filter">
-          <!-- Filters injected by JS -->
-        </div>
-        <div id="videos-gallery">
-          <div class="loading"><div class="loading__spinner"></div></div>
-        </div>
+    <section class="wrap sec">
+      <div class="sec-head">
+        <h2 class="h2">Toutes les formations</h2>
+        <div class="pills" id="videos-filter" role="group" aria-label="Filtrer par catégorie"></div>
+      </div>
+      <div class="grid-3" id="videos-gallery"><div class="loading"><div class="loading__spinner"></div></div></div>
+      <div class="btn-row" style="margin-top:56px;justify-content:center">
+        <a href="https://www.youtube.com/channel/UCEH1oUw3yWVAtDM6vBPnXpA" target="_blank" rel="noopener" class="btn btn--outline">Suivre la chaîne YouTube →</a>
       </div>
     </section>
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="js/main.js?v=10"></script>
-  <script src="js/videos.js?v=2"></script>
+  <script src="js/main.js?v=20"></script>
+  <script src="js/videos.js?v=20"></script>
   <script>
-    initLayout('videos');
+    initLayout('videos', 'indigo');
   </script>
 </body>
 </html>

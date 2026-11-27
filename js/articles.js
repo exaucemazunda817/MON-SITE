@@ -1,51 +1,56 @@
-/* ============================================
-   ARTICLES.JS — Article list & single article page
-   ============================================ */
+/* =====================================================
+   ARTICLES.JS — Liste des articles & page article
+   ===================================================== */
 
 document.addEventListener('DOMContentLoaded', async () => {
   const articles = await fetchJSON('content/articles.json');
-  if (!articles.length) return;
 
-  // --- List Page ---
   const listContainer = document.getElementById('articles-list');
-  if (listContainer) {
-    renderArticlesList(articles, listContainer);
-  }
+  if (listContainer) renderArticlesList(articles, listContainer);
 
-  // --- Single Article Page ---
   const articleContainer = document.getElementById('article-single');
-  if (articleContainer) {
-    renderSingleArticle(articles, articleContainer);
-  }
+  if (articleContainer) renderSingleArticle(articles, articleContainer);
 });
 
 function renderArticlesList(articles, container) {
-  // Get unique categories
-  const categories = ['Tous', ...new Set(articles.map(a => a.category))];
-
-  // Filter bar
+  const sorted = [...articles].sort(byDateDesc);
   const filterBar = document.getElementById('articles-filter');
+  const search = document.getElementById('articles-search');
+  const countEl = document.getElementById('articles-count');
+  const featuredEl = document.getElementById('articles-featured');
+
+  const domains = ['bible', 'droit', 'entre'].filter(d => sorted.some(a => domainOf(a.category) === d));
+  const requested = getUrlParam('domaine');
+  let current = domains.includes(requested) ? requested : 'all';
+  let query = '';
+
   if (filterBar) {
-    filterBar.innerHTML = categories.map(cat =>
-      `<button class="filter-btn ${cat === 'Tous' ? 'active' : ''}" data-category="${cat}">${cat}</button>`
-    ).join('');
-
-    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const cat = btn.dataset.category;
-        const filtered = cat === 'Tous' ? articles : articles.filter(a => a.category === cat);
-        container.innerHTML = filtered.map(a => createArticleCard(a)).join('');
-        initReveal();
-      });
+    const pill = (id, label, n) => `<button class="pill ${id === current ? 'is-active' : ''}" data-d="${id}" aria-pressed="${id === current}">${label} <small>${n}</small></button>`;
+    filterBar.innerHTML = pill('all', 'Tout', sorted.length) +
+      domains.map(d => pill(d, DOMAIN_LABEL[d], sorted.filter(a => domainOf(a.category) === d).length)).join('');
+    filterBar.addEventListener('click', e => {
+      const b = e.target.closest('.pill'); if (!b) return;
+      current = b.dataset.d;
+      filterBar.querySelectorAll('.pill').forEach(x => { x.classList.toggle('is-active', x === b); x.setAttribute('aria-pressed', x === b); });
+      draw();
     });
   }
+  if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); draw(); });
 
-  // Sort by date descending
-  const sorted = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
-  container.innerHTML = sorted.map(a => createArticleCard(a)).join('');
+  function draw() {
+    const list = sorted.filter(a =>
+      (current === 'all' || domainOf(a.category) === current) &&
+      (!query || (a.title + ' ' + a.excerpt + ' ' + a.category).toLowerCase().includes(query)));
+    if (countEl) countEl.innerHTML = `<b>${list.length}</b> article${list.length > 1 ? 's' : ''}`;
+    const showFeatured = featuredEl && current === 'all' && !query && list.length > 0;
+    if (featuredEl) featuredEl.innerHTML = showFeatured ? createFeaturedArticle(list[0]) : '';
+    const rest = showFeatured ? list.slice(1) : list;
+    container.innerHTML = rest.length
+      ? rest.map(createArticleCard).join('')
+      : (showFeatured ? '' : '<p class="empty">Aucun article ne correspond à votre recherche.</p>');
+    initReveal();
+  }
+  draw();
 }
 
 async function renderSingleArticle(articles, container) {
@@ -54,67 +59,122 @@ async function renderSingleArticle(articles, container) {
 
   if (!article) {
     container.innerHTML = `
-      <div class="container" style="padding: 4rem 0; text-align: center;">
-        <h2>Article introuvable</h2>
-        <p style="margin: 1rem 0;">L'article que vous recherchez n'existe pas ou a été déplacé.</p>
+      <div class="wrap notfound">
+        <h1 class="h2">Article introuvable</h1>
+        <p class="lead">L'article que vous recherchez n'existe pas ou a été déplacé.</p>
         <a href="articles.html" class="btn btn--primary">Voir tous les articles</a>
-      </div>
-    `;
+      </div>`;
     return;
   }
 
-  // Update page title
-  document.title = `${article.title} — MonsieurMazunda`;
-
-  // Update meta description
+  document.title = `${article.title} — Monsieur Mazunda`;
   const metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.content = article.excerpt;
 
+  const d = domainOf(article.category);
+  const url = window.location.href;
   const content = await getArticleContent(article);
+  const others = articles.filter(a => a.slug !== article.slug).sort(byDateDesc);
+  const related = [...others.filter(a => domainOf(a.category) === d), ...others.filter(a => domainOf(a.category) !== d)].slice(0, 3);
+  const pdfName = article.pdfUrl ? article.pdfUrl.split('/').pop() : '';
 
   container.innerHTML = `
-    <div class="container">
-      <a href="articles.html" class="back-link">
-        ${ICONS.arrowLeft} Retour aux articles
-      </a>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Fil d'Ariane">
+        <a href="index.html">Accueil</a><span>/</span>
+        <a href="articles.html">Articles</a><span>/</span>
+        <a href="articles.html?domaine=${d}">${DOMAIN_LABEL[d]}</a><span>/</span>
+        <strong>${esc(article.title)}</strong>
+      </nav>
 
-      <div class="article-header">
-        <div class="article-header__meta">
-          <span class="card__category">${article.category}</span>
-          <span>${ICONS.calendar} ${formatDate(article.date)}</span>
-          <span>${ICONS.clock} ${article.readTime} min de lecture</span>
+      <header class="art-head">
+        <span class="tag">${esc(DOMAIN_LABEL[d])} · ${esc(article.category)}</span>
+        <h1 class="h1">${esc(article.title)}</h1>
+        <p class="lead">${esc(article.excerpt)}</p>
+        <div class="byline">
+          <div class="byline__who">
+            <img src="assets/images/portrait.jpg" alt="" width="52" height="52">
+            <div><b>Monsieur Mazunda</b><span>${formatDate(article.date)} · ${article.readTime} min de lecture</span></div>
+          </div>
+          <a class="btn btn--nuit btn--sm" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(article.title + ' ' + url)}">Partager sur WhatsApp</a>
+          <button class="btn btn--soft btn--sm" type="button" data-copy>Copier le lien</button>
         </div>
-        <h1 class="article-header__title">${article.title}</h1>
-        <p class="article-header__excerpt">${article.excerpt}</p>
+      </header>
+
+      <div class="art-layout">
+        <aside class="toc" aria-label="Sommaire">
+          <span class="toc__label">Sommaire</span>
+          <ol id="toc-list"></ol>
+          <span class="toc__label" style="margin-top:14px">Partager</span>
+          <div class="share">
+            <a href="https://wa.me/?text=${encodeURIComponent(article.title + ' ' + url)}" target="_blank" rel="noopener" aria-label="Partager sur WhatsApp">${ICONS.whatsapp}</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" rel="noopener" aria-label="Partager sur Facebook">${ICONS.facebook}</a>
+            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(url)}" target="_blank" rel="noopener" aria-label="Partager sur X">${ICONS.x}</a>
+            <button type="button" data-copy aria-label="Copier le lien">${ICONS.link}</button>
+          </div>
+        </aside>
+
+        <article>
+          <div class="prose" id="prose">${content}</div>
+
+          ${article.pdfUrl ? `
+          <div class="res-box">
+            <span class="pdf-ico pdf-ico--${d}">PDF</span>
+            <div>
+              <span class="kick">Lire l'étude complète</span>
+              <div class="res-box__t">${esc(article.title)}</div>
+              <div class="res-box__m">Retrouvez l'intégralité de cette étude au format PDF.</div>
+            </div>
+            <a href="${article.pdfUrl}" class="btn btn--safran btn--sm" download onclick="trackDownload('${esc(pdfName.replace(/\.pdf$/, ''))}')">${ICONS.download} Télécharger</a>
+          </div>` : ''}
+
+          <div class="author-card">
+            <img src="assets/brand/icone-app.svg" alt="" width="112" height="112">
+            <div>
+              <span class="kick">L'auteur</span>
+              <h2 class="h3">Monsieur Mazunda</h2>
+              <p>Enseignant, juriste et auteur. Il partage ses réflexions et ses connaissances pour rendre la Bible, le droit et l'entrepreneuriat accessibles.</p>
+              <a href="about.html" class="link-arrow">Découvrir son parcours →</a>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
 
-    <div class="container">
-      <img src="${article.image}" alt="${article.title}" class="article-cover">
-    </div>
-
-    <div class="article-content">
-      ${content}
-
-      ${article.pdfUrl ? `
-        <div class="article-download">
-          <h2>Lire l’étude complète</h2>
-          <p>Retrouvez l’intégralité de cette étude au format PDF.</p>
-          <a href="${article.pdfUrl}" class="btn btn--primary" download>
-            ${ICONS.download} Télécharger le PDF
-          </a>
-        </div>
-      ` : ''}
-    </div>
-
-    <div class="article-content">
-      <div class="share-bar">
-        <span>Partager :</span>
-        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(window.location.href)}" target="_blank" class="social-link" aria-label="Partager sur X">${ICONS.twitter}</a>
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" target="_blank" class="social-link" aria-label="Partager sur LinkedIn">${ICONS.linkedin}</a>
-      </div>
-    </div>
+    ${related.length ? `
+    <section class="wrap" style="padding-bottom:112px">
+      <div class="sec-head"><h2 class="h2">Pour continuer la lecture</h2><a href="articles.html" class="link-arrow">Tous les articles →</a></div>
+      <div class="grid-3">${related.map(createArticleCard).join('')}</div>
+    </section>` : ''}
   `;
+
+  // Sommaire automatique à partir des intertitres
+  const prose = document.getElementById('prose');
+  const heads = Array.from(prose.querySelectorAll('h2'));
+  const toc = document.getElementById('toc-list');
+  if (heads.length) {
+    heads.forEach((h, i) => { h.id = h.id || 'section-' + (i + 1); });
+    toc.innerHTML = heads.map(h => `<li><a href="#${h.id}">${esc(h.textContent.trim().replace(/^./, c => c.toUpperCase()))}</a></li>`).join('');
+    const links = Array.from(toc.querySelectorAll('a'));
+    const onScroll = () => {
+      let idx = 0;
+      heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 160) idx = i; });
+      links.forEach((l, i) => l.classList.toggle('is-active', i === idx));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  } else {
+    toc.previousElementSibling.remove();
+    toc.remove();
+  }
+
+  // Copier le lien
+  container.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(url); } catch (e) { /* non disponible */ }
+    if (btn.textContent.trim()) { const t = btn.textContent; btn.textContent = 'Lien copié ✓'; setTimeout(() => { btn.textContent = t; }, 1800); }
+  }));
+
+  initReveal();
 }
 
 function formatArticleText(text, article) {

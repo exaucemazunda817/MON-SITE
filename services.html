@@ -3,52 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes services — MonsieurMazunda</title>
-  <meta name="description" content="Découvrez les services de Monsieur Mazunda : formations, rédaction de mémoires, conseil juridique, accompagnement entrepreneurial et enseignement biblique. Réalisations, documents et écrits.">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <title>Mes services — Monsieur Mazunda</title>
+  <meta name="description" content="Les services de Monsieur Mazunda : formations bureautique et digital, rédaction de mémoires et TFC, conseil juridique, accompagnement entrepreneurial et enseignement biblique.">
+  <meta name="author" content="Monsieur Mazunda">
+  <meta name="theme-color" content="#F4EFE6">
+  <meta property="og:title" content="Mes services — Monsieur Mazunda">
+  <meta property="og:description" content="Les services de Monsieur Mazunda : formations bureautique et digital, rédaction de mémoires et TFC, conseil juridique, accompagnement entrepreneurial et enseignement biblique.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://monsieurmazunda.site/services.html">
+  <meta property="og:image" content="https://monsieurmazunda.site/assets/images/portrait.jpg">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/icone-app.svg">
+  <link rel="icon" type="image/png" href="assets/brand/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body>
 
   <div id="site-header"></div>
 
   <main>
-    <section class="page-header">
-      <div class="container">
-        <h1>Mes services</h1>
-        <p>Ce que je fais et comment je peux vous accompagner.</p>
+    <section class="wrap svc-hero">
+      <span class="eyebrow">Mes services</span>
+      <h1 class="display" style="font-size:clamp(52px,6.6vw,96px)">Travaillons<br><em>ensemble.</em></h1>
+      <p class="lead">Ce que je fais et comment je peux vous accompagner : formations, rédaction, conseil juridique, accompagnement de projets et enseignement biblique.</p>
+      <div class="btn-row">
+        <a href="contact.html" class="btn btn--primary">Décrire mon besoin →</a>
+        <a href="https://wa.me/243828516026" target="_blank" rel="noopener" class="btn btn--outline">Écrire sur WhatsApp</a>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="grid grid--3" id="services-list">
-          <div class="loading"><div class="loading__spinner"></div></div>
-        </div>
-      </div>
+    <section class="wrap" style="padding-bottom:128px">
+      <div class="svc-grid" id="services-list"><div class="loading"><div class="loading__spinner"></div></div></div>
     </section>
 
-    <section class="section section--alt">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-header__title">Réalisations & publications</h2>
-          <p class="section-header__subtitle">Images, documents et écrits qui illustrent mon travail.</p>
-        </div>
-        <div class="filter-bar" id="portfolio-filter">
-          <!-- Filters injected by JS -->
-        </div>
-        <div id="portfolio-list" style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-md);">
-          <div class="loading"><div class="loading__spinner"></div></div>
+    <section class="band-nuit stripes-soft">
+      <div class="wrap sec">
+        <span class="eyebrow eyebrow--safran">Comment ça se passe</span>
+        <h2 class="h2" style="margin-top:14px">Trois étapes simples</h2>
+        <div class="how">
+          <div data-reveal="" data-i="0"><div class="how__n">1</div><h3>Vous m'écrivez</h3><p>Par WhatsApp, par e-mail ou par le formulaire de contact : quelques lignes suffisent pour présenter votre besoin.</p></div>
+          <div data-reveal="" data-i="1"><div class="how__n">2</div><h3>Nous en parlons</h3><p>Un premier échange pour préciser vos attentes, le public concerné, le format et les délais.</p></div>
+          <div data-reveal="" data-i="2"><div class="how__n">3</div><h3>Je vous accompagne</h3><p>Formation, rédaction, conseil ou enseignement : un travail structuré, rigoureux et adapté à votre situation.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- Newsletter CTA -->
-    <section class="section">
-      <div class="container">
-        <div class="newsletter-cta reveal">
-          <h3>Une idée de collaboration ?</h3>
-          <p>Contactez-moi pour discuter de votre projet ou pour toute demande liée à mes services.</p>
-          <a href="contact.html" class="btn btn--accent btn--lg">Me contacter</a>
+    <section class="wrap sec" id="portfolio-section">
+      <div class="sec-head">
+        <div><span class="eyebrow">Réalisations & publications</span><h2 class="h2">Images, documents et écrits</h2></div>
+        <div class="pills" id="portfolio-filter"></div>
+      </div>
+      <div class="res-list" id="portfolio-list"></div>
+    </section>
+
+    <section class="wrap sec">
+      <div class="cta-arch stripes" data-reveal="">
+        <h2 class="h2">Une idée de collaboration ?</h2>
+        <p>Contactez-moi pour discuter de votre projet ou pour toute demande liée à mes services.</p>
+        <div class="btn-row">
+          <a href="https://wa.me/243828516026" target="_blank" rel="noopener" class="btn btn--safran">Écrire sur WhatsApp</a>
+          <a href="contact.html" class="btn btn--light-outline">Formulaire de contact</a>
         </div>
       </div>
     </section>
@@ -56,8 +73,8 @@
 
   <div id="site-footer"></div>
 
-  <script src="js/main.js?v=10"></script>
-  <script src="js/services.js"></script>
+  <script src="js/main.js?v=20"></script>
+  <script src="js/services.js?v=20"></script>
   <script>
     initLayout('services');
   </script>
