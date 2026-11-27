@@ -3,38 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Articles — MonsieurMazunda</title>
-  <meta name="description" content="Retrouvez tous les articles de Monsieur Mazunda sur le marketing digital, le personal branding, l'entrepreneuriat et les nouvelles technologies.">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <title>Articles — Monsieur Mazunda</title>
+  <meta name="description" content="Tous les articles de Monsieur Mazunda : réflexions bibliques, notions de droit et conseils pour l'entrepreneuriat.">
+  <meta name="author" content="Monsieur Mazunda">
+  <meta name="theme-color" content="#F4EFE6">
+  <meta property="og:title" content="Articles — Monsieur Mazunda">
+  <meta property="og:description" content="Tous les articles de Monsieur Mazunda : réflexions bibliques, notions de droit et conseils pour l'entrepreneuriat.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://monsieurmazunda.site/articles.html">
+  <meta property="og:image" content="https://monsieurmazunda.site/assets/images/portrait.jpg">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/icone-app.svg">
+  <link rel="icon" type="image/png" href="assets/brand/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body>
 
   <div id="site-header"></div>
 
   <main>
-    <section class="page-header">
-      <div class="container">
-        <h1>Articles</h1>
-        <p>Réflexions, conseils et guides pratiques pour maîtriser le digital.</p>
-      </div>
+    <section class="wrap svc-hero">
+      <span class="eyebrow">Articles</span>
+      <h1 class="h1">Lire pour <em>comprendre,</em><br>comprendre pour agir.</h1>
+      <p class="lead">Réflexions, conseils et guides pratiques autour de la Bible, du droit et de l'entrepreneuriat.</p>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="filter-bar" id="articles-filter">
-          <!-- Filters injected by JS -->
+    <section class="wrap" style="padding-bottom:128px">
+      <div class="toolbar" style="margin-top:0">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <label for="articles-search" class="sr-only">Rechercher un article</label>
+          <input type="search" id="articles-search" placeholder="Rechercher un article…" autocomplete="off">
+          <span class="count" id="articles-count" aria-live="polite"></span>
         </div>
-        <div class="grid grid--3" id="articles-list">
-          <div class="loading"><div class="loading__spinner"></div></div>
-        </div>
+        <div class="pills" id="articles-filter" role="group" aria-label="Filtrer par domaine"></div>
       </div>
+      <div id="articles-featured"></div>
+      <div class="grid-3" id="articles-list"><div class="loading"><div class="loading__spinner"></div></div></div>
     </section>
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="js/main.js?v=10"></script>
-  <script src="js/articles.js?v=2"></script>
+  <script src="js/main.js?v=20"></script>
+  <script src="js/articles.js?v=20"></script>
   <script>
     initLayout('articles');
   </script>

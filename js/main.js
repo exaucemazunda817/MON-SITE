@@ -1,39 +1,55 @@
-/* ============================================
-   MAIN.JS — Shared utilities, header/footer, navigation
-   ============================================ */
+/* =====================================================
+   MAIN.JS — Monsieur Mazunda « Le Seuil »
+   Utilitaires, en-tête, pied de page, cartes, animations
+   ===================================================== */
 
-// --- SVG Icons ---
-const ICONS = {
-  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
-  arrowLeft: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>',
-  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
-  calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
-  download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>',
-  file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>',
-  briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16M2 13h20"/></svg>',
-  pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
-  image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
-  play: '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>',
-  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>',
-  linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>',
-  twitter: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
-  youtube: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
-  github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>',
-  tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.66-2.16-1.66-3.6h-3.09v13.72c0 1.66-1.35 3.02-3.02 3.02a3.02 3.02 0 01-3.02-3.02 3.02 3.02 0 013.02-3.02c.31 0 .61.05.9.13V9.94a6.11 6.11 0 00-.9-.07 6.13 6.13 0 00-6.13 6.13A6.13 6.13 0 008.83 22a6.13 6.13 0 006.13-6.13V8.7a7.83 7.83 0 004.57 1.47V7.08c-1.01 0-1.95-.31-2.93-1.26z"/></svg>',
-  facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94z"/></svg>',
-  instagram: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.014 8.333 0 8.74 0 12s.014 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.986 8.74 24 12 24s3.667-.014 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.058-1.28.072-1.687.072-4.947s-.014-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.014 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zm0 10.162c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.645-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>'
+const SITE = {
+  whatsapp: 'https://wa.me/243828516026',
+  whatsappLabel: '+243 828 516 026',
+  email: 'exaucemazunda817@gmail.com',
+  formspree: 'https://formspree.io/f/xoeajrbn',
+  socials: [
+    { name: 'YouTube', href: 'https://www.youtube.com/channel/UCEH1oUw3yWVAtDM6vBPnXpA' },
+    { name: 'TikTok', href: 'https://www.tiktok.com/@monsieurmzd?_t=ZM-8u5NvLQ7aGD&_r=1' },
+    { name: 'Facebook', href: 'https://www.facebook.com/share/15qBt1YB9n/?mibextid=wwXIfr' },
+    { name: 'Instagram', href: 'https://www.instagram.com/monsieurmazunda?igsh=MTZ5YjduYjR5NjM0cg%3D%3D&utm_source=qr' },
+    { name: 'X', href: 'https://x.com/exauce_maz817?s=21' }
+  ]
 };
 
-// --- Utility Functions ---
-function formatDate(dateStr) {
+// --- Icônes ---
+const ICONS = {
+  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
+  play: '<svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="#14163F"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+  star: '<svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 2L13.9 9.1 21 12 13.9 14.9 12 22 10.1 14.9 3 12 10.1 9.1Z" fill="currentColor"/></svg>',
+  whatsapp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.5-4A8 8 0 1 1 9 19.5z"/><circle cx="12" cy="12" r="1.6" fill="#F5B731" stroke="none"/></svg>',
+  link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
+  facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.5-1 1-1h2V2.5h-2.8C11.3 2.5 10.6 4.6 10.6 6v2.5H8.5V12h2.1v9.5H14V12h2.8l.4-3.5H14z"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+  // Domaines
+  bible: 'M5 21V11a7 7 0 0 1 14 0v10M5 21h14M9.5 21v-6a2.5 2.5 0 0 1 5 0v6',
+  droit: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h6',
+  entre: 'M6 6h8a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h9',
+  cap: 'M2 9l10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5',
+  book: 'M3 5h6a3 3 0 0 1 3 3v12a2.5 2.5 0 0 0-2.5-2.5H3zM21 5h-6a3 3 0 0 0-3 3v12a2.5 2.5 0 0 1 2.5-2.5H21z',
+  mic: 'M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3M8 21h8',
+  doc: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4',
+  laptop: 'M4 5h16v10H4zM2 19h20'
+};
+
+// --- Utilitaires ---
+function formatDate(dateStr, short) {
   const date = new Date(dateStr);
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return date.toLocaleDateString('fr-FR', options);
+  if (isNaN(date)) return '';
+  return date.toLocaleDateString('fr-FR', short
+    ? { year: 'numeric', month: 'short', day: 'numeric' }
+    : { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 function getUrlParam(param) {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(param);
+  return new URLSearchParams(window.location.search).get(param);
 }
 
 async function fetchJSON(path) {
@@ -47,276 +63,366 @@ async function fetchJSON(path) {
   }
 }
 
-// --- Header Component ---
-function renderHeader(activePage) {
-  const pages = [
-    { name: 'Accueil', href: 'index.html', id: 'home' },
-    { name: 'Articles', href: 'articles.html', id: 'articles' },
-    { name: 'Mes services', href: 'services.html', id: 'services' },
-    { name: 'Formations vidéo', href: 'videos.html', id: 'videos' },
-    { name: 'Ressources', href: 'resources.html', id: 'resources' },
-    { name: 'À propos', href: 'about.html', id: 'about' },
-    { name: 'Contact', href: 'contact.html', id: 'contact' }
-  ];
+function esc(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
 
-  const navLinks = pages.map(p =>
-    `<li><a href="${p.href}" class="nav__link ${p.id === activePage ? 'active' : ''}">${p.name}</a></li>`
+function byDateDesc(a, b) { return new Date(b.date) - new Date(a.date); }
+
+// Domaine (Bible, Droit, Entrepreneuriat) déduit de la catégorie
+function domainOf(category) {
+  const c = (category || '').toLowerCase();
+  if (/bibl|foi|théolog|theolog|âme|ame|chrét|spirit|évangile|predic|prédic/.test(c)) return 'bible';
+  if (/droit|jurid|ohada|loi|légal|legal/.test(c)) return 'droit';
+  return 'entre';
+}
+const DOMAIN_LABEL = { bible: 'Bible', droit: 'Droit', entre: 'Entrepreneuriat' };
+
+// Glyphe des illustrations : première lettre significative du titre
+function glyphOf(title) {
+  const words = String(title || '').replace(/[«»"“”’'?!:.,]/g, ' ').split(/\s+/).filter(Boolean);
+  const stop = /^(le|la|les|l|un|une|des|du|de|d|et|en|pour|pourquoi|comment|quel|quelle|quelles|quels|à|a|au|aux)$/i;
+  const w = words.find(x => !stop.test(x)) || words[0] || 'M';
+  if (/^\d+$/.test(w)) return w;
+  return w.charAt(0).toUpperCase();
+}
+
+function archArt(domain, glyph, cls = '') {
+  return `<div class="arch-art arch-art--${domain} ${cls}"><div class="arch-art__a"><div class="arch-art__b"><span>${esc(glyph)}</span></div></div></div>`;
+}
+
+// --- En-tête ---
+const NAV = [
+  { name: 'Articles', href: 'articles.html', id: 'articles' },
+  { name: 'Formations vidéo', href: 'videos.html', id: 'videos' },
+  { name: 'Ressources', href: 'resources.html', id: 'resources' },
+  { name: 'Services', href: 'services.html', id: 'services' },
+  { name: 'À propos', href: 'about.html', id: 'about' }
+];
+
+function renderHeader(activePage, theme) {
+  const dark = theme === 'dark' || theme === 'indigo';
+  const links = NAV.map(p =>
+    `<a href="${p.href}" class="${p.id === activePage ? 'is-active' : ''}"${p.id === activePage ? ' aria-current="page"' : ''}>${p.name}</a>`
   ).join('');
-
+  const ctaClass = dark ? 'btn--safran' : (activePage === 'contact' ? 'btn--nuit' : 'btn--primary');
   return `
-    <header class="header" id="header">
-      <div class="header__inner">
-        <a href="index.html" class="header__logo">Monsieur<span>Mazunda</span></a>
-        <button class="nav__toggle" id="navToggle" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-        <nav class="nav" id="nav">
-          <ul class="nav__list">${navLinks}</ul>
-        </nav>
-        <div class="nav-overlay" id="navOverlay"></div>
+    <header class="hd ${theme === 'dark' ? 'hd--dark' : ''} ${theme === 'indigo' ? 'hd--dark hd--indigo' : ''}" id="header">
+      <div class="wrap hd__inner">
+        <a href="index.html" class="hd__logo" aria-label="Monsieur Mazunda, accueil">
+          <img class="full" src="assets/brand/logo-horizontal-${dark ? 'fonce' : 'clair'}.svg" alt="Monsieur Mazunda" width="236" height="79">
+          <img class="mono" src="assets/brand/monogramme-${dark ? 'fonce' : 'clair'}.svg" alt="Monsieur Mazunda" width="38" height="44">
+        </a>
+        <nav class="hd__nav" aria-label="Navigation principale">${links}</nav>
+        <a href="contact.html" class="btn hd__cta ${ctaClass}">Me contacter</a>
+        <button class="hd__burger" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
       </div>
     </header>
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__top">
+        <img src="assets/brand/monogramme-clair.svg" alt="Monsieur Mazunda">
+        <button class="drawer__close" id="navClose" aria-label="Fermer le menu">×</button>
+      </div>
+      <nav aria-label="Menu mobile">
+        <a href="index.html" class="${activePage === 'home' ? 'is-active' : ''}">Accueil <span>→</span></a>
+        ${NAV.map(p => `<a href="${p.href}" class="${p.id === activePage ? 'is-active' : ''}">${p.name} <span>→</span></a>`).join('')}
+        <a href="contact.html" class="${activePage === 'contact' ? 'is-active' : ''}">Contact <span>→</span></a>
+      </nav>
+      <div class="drawer__actions">
+        <a href="contact.html" class="btn btn--primary">Me contacter</a>
+        <a href="${SITE.whatsapp}" target="_blank" rel="noopener" class="btn btn--outline">Écrire sur WhatsApp</a>
+      </div>
+    </div>
+    <a href="${SITE.whatsapp}" target="_blank" rel="noopener" class="wa-fab" aria-label="Écrire sur WhatsApp">${ICONS.whatsapp.replace('currentColor', '#F4EFE6')}</a>
   `;
 }
 
-// --- Footer Component ---
+// --- Pied de page ---
 function renderFooter() {
+  const col = (title, items) => `
+    <div class="ft__col"><h4>${title}</h4>${items.map(([label, href, ext]) =>
+      `<a href="${href}"${ext ? ' target="_blank" rel="noopener"' : ''}>${label}</a>`).join('')}</div>`;
   return `
-    <footer class="footer">
-      <div class="container">
-        <div class="footer__inner">
-          <div class="footer__brand">
-            <a href="index.html" class="header__logo" style="color: white;">Monsieur<span>Mazunda</span></a>
-            <p>Partager, former et inspirer. Je crée du contenu autour de la formation biblique, du droit et de l'entrepreneuriat pour vous aider à grandir spirituellement et professionnellement.</p>
+    <footer class="ft band-nuit stripes-soft">
+      <div class="wrap">
+        <div class="ft__grid">
+          <div class="ft__brand">
+            <img src="assets/brand/logo-horizontal-fonce.svg" alt="Monsieur Mazunda" width="240" height="81" loading="lazy">
+            <em>Partager, former, inspirer.</em>
           </div>
-          <div>
-            <h4 class="footer__title">Navigation</h4>
-            <ul class="footer__links">
-              <li><a href="index.html">Accueil</a></li>
-              <li><a href="articles.html">Articles</a></li>
-              <li><a href="videos.html">Formations vidéo</a></li>
-              <li><a href="resources.html">Ressources</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="footer__title">Liens</h4>
-            <ul class="footer__links">
-              <li><a href="about.html">À propos</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="footer__title">Suivez-moi</h4>
-            <div class="footer__social">
-              <a href="https://x.com/exauce_maz817?s=21" target="_blank" rel="noopener" aria-label="X (Twitter)">${ICONS.twitter}</a>
-              <a href="https://www.youtube.com/channel/UCEH1oUw3yWVAtDM6vBPnXpA" target="_blank" rel="noopener" aria-label="YouTube">${ICONS.youtube}</a>
-              <a href="https://www.tiktok.com/@monsieurmzd?_t=ZM-8u5NvLQ7aGD&_r=1" target="_blank" rel="noopener" aria-label="TikTok">${ICONS.tiktok}</a>
-              <a href="https://www.facebook.com/share/15qBt1YB9n/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">${ICONS.facebook}</a>
-              <a href="https://www.instagram.com/monsieurmazunda?igsh=MTZ5YjduYjR5NjM0cg%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.instagram}</a>
-            </div>
-          </div>
+          ${col('Explorer', [['Articles', 'articles.html'], ['Formations vidéo', 'videos.html'], ['Ressources', 'resources.html'], ['À propos', 'about.html']])}
+          ${col('Travailler ensemble', [['Services', 'services.html'], ['Contact', 'contact.html'], ['WhatsApp', SITE.whatsapp, true], ['E-mail', 'mailto:' + SITE.email]])}
+          ${col('Suivre', SITE.socials.map(s => [s.name, s.href, true]))}
         </div>
-        <div class="footer__bottom">
-          <p>&copy; ${new Date().getFullYear()} Monsieur Mazunda. Tous droits réservés.</p>
+        <div class="ft__bottom">
+          <span>© ${new Date().getFullYear()} Exaucé Mazunda · Kinshasa, RDC</span>
+          <span>Enseignant · Juriste · Auteur</span>
         </div>
       </div>
     </footer>
   `;
 }
 
-// --- Initialize Header & Footer ---
-function initLayout(activePage) {
-  // Insert header
+// --- Initialisation de la mise en page ---
+function initLayout(activePage, theme) {
   const headerEl = document.getElementById('site-header');
-  if (headerEl) headerEl.innerHTML = renderHeader(activePage);
-
-  // Insert footer
+  if (headerEl) headerEl.innerHTML = renderHeader(activePage, theme);
   const footerEl = document.getElementById('site-footer');
   if (footerEl) footerEl.innerHTML = renderFooter();
 
-  // Mobile nav toggle
-  setTimeout(() => {
-    const toggle = document.getElementById('navToggle');
-    const nav = document.getElementById('nav');
-    const overlay = document.getElementById('navOverlay');
+  const header = document.getElementById('header');
+  const toggle = document.getElementById('navToggle');
+  const close = document.getElementById('navClose');
+  const drawer = document.getElementById('drawer');
 
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        toggle.classList.toggle('open');
-        nav.classList.toggle('open');
-        overlay.classList.toggle('visible');
-        document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
-      });
+  const setMenu = (open) => {
+    if (!drawer) return;
+    drawer.classList.toggle('is-open', open);
+    drawer.setAttribute('aria-hidden', String(!open));
+    toggle && toggle.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open && close) close.focus();
+  };
+  toggle && toggle.addEventListener('click', () => setMenu(!drawer.classList.contains('is-open')));
+  close && close.addEventListener('click', () => { setMenu(false); toggle && toggle.focus(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 
-      if (overlay) {
-        overlay.addEventListener('click', () => {
-          toggle.classList.remove('open');
-          nav.classList.remove('open');
-          overlay.classList.remove('visible');
-          document.body.style.overflow = '';
-        });
-      }
-    }
-
-    // Header scroll effect
-    const header = document.getElementById('header');
-    if (header) {
-      window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 10);
-      });
-    }
-  }, 0);
+  if (header) {
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
   initNewsletterForm();
+  document.querySelectorAll('[data-logo]').forEach(el => mountLogo(el, el.getAttribute('data-logo')));
 }
 
-// --- Newsletter Form (Formspree) ---
-const NEWSLETTER_ENDPOINT = 'https://formspree.io/f/xoeajrbn';
-
+// --- Lettre d'information (Formspree) ---
 function initNewsletterForm() {
   const form = document.getElementById('newsletterForm');
   if (!form) return;
-
   const message = document.getElementById('newsletterMessage');
   const button = form.querySelector('button[type="submit"]');
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const originalLabel = button.textContent;
+    const original = button.textContent;
     button.disabled = true;
-    button.textContent = 'Envoi...';
-    if (message) message.textContent = '';
-
+    button.textContent = 'Envoi…';
+    if (message) { message.textContent = ''; message.className = 'nl__msg'; }
     try {
-      const response = await fetch(NEWSLETTER_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      });
-
-      if (response.ok) {
-        form.reset();
-        if (message) {
-          message.textContent = 'Merci pour votre inscription !';
-          message.style.color = 'var(--color-success, green)';
-        }
-      } else {
-        throw new Error('Formspree error');
-      }
+      const data = new FormData(form);
+      data.append('_subject', 'Nouvelle inscription à la lettre');
+      const response = await fetch(SITE.formspree, { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+      if (!response.ok) throw new Error('Formspree');
+      form.reset();
+      if (message) { message.textContent = 'Merci ! Vous êtes inscrit, à dimanche.'; message.classList.add('msg-ok'); }
     } catch (error) {
-      if (message) {
-        message.textContent = "Une erreur est survenue, veuillez réessayer.";
-        message.style.color = 'var(--color-error, red)';
-      }
+      if (message) { message.textContent = 'Une erreur est survenue, veuillez réessayer.'; message.classList.add('msg-err'); }
     } finally {
       button.disabled = false;
-      button.textContent = originalLabel;
+      button.textContent = original;
     }
   });
 }
 
-// --- Scroll Reveal ---
-function initReveal() {
-  const reveals = document.querySelectorAll('.reveal');
-  if (!reveals.length) return;
+// --- Niveau d'animation ---
+function motionLevel() {
+  const c = navigator.connection;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return 'reduit';
+  if ((c && (c.saveData || /2g$/.test(c.effectiveType || ''))) || (navigator.deviceMemory && navigator.deviceMemory <= 1)) return 'allege';
+  return 'complet';
+}
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+// --- Révélations au défilement ---
+// data-reveal="" (fondu + glissement) | "arch" (masque en arche) | "draw" (tracé SVG)
+function initReveal(root) {
+  root = root || document;
+  if (!('IntersectionObserver' in window)) return;
+  const level = motionLevel();
+  const full = level === 'complet', red = level === 'reduit';
+  const AP = 'cubic-bezier(.22,1,.36,1)', EAU = 'cubic-bezier(.45,.05,.35,1)';
+  const els = Array.from(root.querySelectorAll('[data-reveal]:not([data-rv])'));
+  els.forEach(el => {
+    el.setAttribute('data-rv', '1');
+    const t = el.getAttribute('data-reveal');
+    const i = +(el.getAttribute('data-i') || 0);
+    el.__d = red ? 0 : i * (t === 'arch' ? 120 : 80);
+    el.style.transition = 'none';
+    if (t === 'draw') { el.style.strokeDasharray = '1'; el.style.strokeDashoffset = full ? '1' : '0'; }
+    else if (t === 'arch' && full) {
+      el.style.clipPath = 'inset(100% 0 0 0 round 999px 999px 0 0)';
+      const im = el.querySelector('img'); if (im) { im.style.transition = 'none'; im.style.transform = 'scale(1.08)'; }
+    } else { el.style.opacity = '0'; if (full) el.style.transform = 'translateY(16px)'; }
+  });
+  const show = el => {
+    const t = el.getAttribute('data-reveal'), d = el.__d || 0;
+    if (t === 'draw') { el.style.transition = `stroke-dashoffset 1200ms ${EAU} ${d}ms`; el.style.strokeDashoffset = '0'; }
+    else if (t === 'arch' && full) {
+      el.style.transition = `clip-path 900ms ${AP} ${d}ms`; el.style.clipPath = 'inset(0 0 0 0 round 999px 999px 12px 12px)';
+      const im = el.querySelector('img'); if (im) { im.style.transition = `transform 1200ms ${AP} ${d}ms`; im.style.transform = 'scale(1)'; }
+    } else {
+      const dur = full ? 600 : red ? 150 : 300;
+      el.style.transition = `opacity ${dur}ms ${AP} ${d}ms, transform ${dur}ms ${AP} ${d}ms`;
+      el.style.opacity = '1'; el.style.transform = 'none';
+    }
+  };
+  // Un élément masqué par clip-path n'a plus de surface visible : on observe alors son parent.
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target.__rvEl || e.target;
+        requestAnimationFrame(() => requestAnimationFrame(() => show(el)));
+        io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-  reveals.forEach(el => observer.observe(el));
+  }, { threshold: 0.12 });
+  els.forEach(el => {
+    if (el.getAttribute('data-reveal') === 'arch' && el.parentElement) {
+      el.parentElement.__rvEl = el;
+      io.observe(el.parentElement);
+    } else io.observe(el);
+  });
 }
 
-// --- Article Card ---
-function createArticleCard(article) {
+// --- Monogramme animé « Le Seuil » ---
+function mountLogo(container, theme) {
+  const level = motionLevel();
+  const full = level === 'complet', dark = theme !== 'clair';
+  const NS = 'http://www.w3.org/2000/svg';
+  const keepCase = { viewBox: 1, pathLength: 1, maskUnits: 1 };
+  const h = (tag, props, ...kids) => {
+    const el = document.createElementNS(NS, tag);
+    Object.entries(props || {}).forEach(([k, v]) => {
+      if (k === 'style') Object.assign(el.style, v);
+      else el.setAttribute(keepCase[k] ? k : k.replace(/[A-Z]/g, m => '-' + m.toLowerCase()), v);
+    });
+    kids.flat().forEach(c => c && el.appendChild(c));
+    return el;
+  };
+  const AP = 'cubic-bezier(.22,1,.36,1)', EAU = 'cubic-bezier(.45,.05,.35,1)', ONDE = 'cubic-bezier(.16,1,.3,1)', REB = 'cubic-bezier(.34,1.56,.64,1)';
+  const L = dark ? '#F4EFE6' : '#2A2FBF', S = dark ? '#F5B731' : '#E0A21C', star = dark ? '#FFE7AE' : '#E0A21C', corner = dark ? '#D8CFC0' : '#5A5FD8', hi = dark ? '#FFE7AE' : '#FFF3D6';
+  const arches = dark ? ['#3539CF', '#4549DC', '#6A62C9'] : ['#E4E4F8', '#C9CAF2', '#A9ABEA'];
+  const A = (n, d, delay, e) => full ? `${n} ${d}ms ${e || AP} ${delay}ms both` : 'none';
+  const box = o => ({ transformBox: 'fill-box', transformOrigin: o || '50% 100%' });
+  const draw = (d, delay, e) => ({ strokeDasharray: '1', strokeDashoffset: full ? '1' : '0', animation: A('mm-draw', d, delay, e || EAU) });
+  const root = level === 'allege' ? { animation: 'mm-fade 300ms ease both' } : level === 'reduit' ? { animation: 'mm-fade 150ms linear both' } : {};
+  const mid = 'mmz' + Math.random().toString(36).slice(2, 7);
+  const lines = [[128, 72], [137, 76], [146, 68], [155, 75], [164, 64]];
+  const ad = ['M82 182V150A39 39 0 0 1 160 150V182Z', 'M91 182V153A30 30 0 0 1 151 153V182Z', 'M100 182V156A21 21 0 0 1 142 156V182Z', 'M108 182V159A13 13 0 0 1 134 159V182Z'];
+  const fills = arches.concat([S]);
+  const svg = h('svg', { viewBox: '0 0 260 300', width: '100%', height: '100%', role: 'img', 'aria-label': 'Monogramme Monsieur Mazunda', style: root },
+    h('defs', null, h('mask', { id: mid, maskUnits: 'userSpaceOnUse', x: -20, y: 0, width: 300, height: 320 },
+      h('path', { d: 'M121 186 L121 204 Q122 212 138 212 L160 212 Q172 216 158 226 L112 258 Q104 267 126 267 L204 267', fill: 'none', stroke: '#fff', strokeWidth: 22, strokeLinecap: 'round', strokeLinejoin: 'round', pathLength: 1, style: draw(620, 1050) }))),
+    h('g', { transform: 'translate(-6 -5)' },
+      h('g', { stroke: L, strokeLinecap: 'round', strokeWidth: 2, opacity: dark ? .5 : .4 }, lines.map((l, i) => h('line', { x1: 52, y1: l[0], x2: l[1], y2: l[0], pathLength: 1, style: draw(260, 330 + i * 50, AP) }))),
+      ad.map((d, i) => h('path', { d, fill: fills[i], style: Object.assign(box(), { animation: A('mm-arch', 460, 450 + i * 100) }) })),
+      h('path', { d: 'M121 130L122.6 134.4L127 136L122.6 137.6L121 142L119.4 137.6L115 136L119.4 134.4Z', fill: star, style: Object.assign(box('50% 50%'), { animation: A('mm-star', 420, 900, REB) }) }),
+      h('path', { d: 'M82 150A39 39 0 0 1 160 150', fill: 'none', stroke: S, strokeWidth: 1.4, pathLength: 1, style: draw(500, 520, AP) }),
+      h('g', { fill: L, style: { animation: A('mm-rise', 380, 0) } },
+        h('rect', { x: 34, y: 30, width: 9, height: 152 }), h('polygon', { points: '42,30 82,30 121,104 158,30 166,30 121,126' }), h('polygon', { points: '158,30 174,30 194,50 194,182 158,182' })),
+      h('polygon', { points: '174,30 194,50 174,50', fill: corner, style: { animation: A('mm-rise', 380, 0) } }),
+      h('g', { fill: L, style: Object.assign(box('50% 50%'), { animation: A('mm-open', 420, 160) }) },
+        h('path', { d: 'M34 180Q80 166 121 186L121 193Q80 173 34 187Z' }), h('path', { d: 'M121 186Q162 166 194 180L194 187Q162 173 121 193Z' })),
+      h('g', { fill: 'none', stroke: L, strokeWidth: 1.2, opacity: .5, style: Object.assign(box('50% 50%'), { animation: A('mm-open', 420, 240) }) }, h('path', { d: 'M38 192Q80 178 119 197' }), h('path', { d: 'M123 197Q162 178 190 190' })),
+      h('g', { fill: S, mask: `url(#${mid})` }, h('path', { d: 'M116 186C117 198 113 205 124 207L132 207C126 202 127 196 126 186Z' }), h('path', { d: 'M120 207C134 206 150 207 158 207C174 207 178 217 166 225L121 255C116 259 118 261 126 261L160 261C176 261 192 262 200 266C190 271 162 272 120 272C96 272 93 261 106 253L146 222C150 219 148 218 142 218L126 218C116 218 112 210 120 207Z' })),
+      h('path', { d: 'M160 222Q140 236 124 248', stroke: hi, strokeWidth: 2, strokeLinecap: 'round', fill: 'none', pathLength: 1, style: draw(240, 1500) }),
+      h('ellipse', { cx: 184, cy: 270, rx: 30, ry: 7, fill: 'none', stroke: S, strokeWidth: 1.6, opacity: .6, style: Object.assign(box('50% 50%'), { animation: A('mm-ring', 520, 1560, ONDE) }) }),
+      h('ellipse', { cx: 184, cy: 271, rx: 44, ry: 10.5, fill: 'none', stroke: S, strokeWidth: 1.1, opacity: .35, style: Object.assign(box('50% 50%'), { animation: A('mm-ring', 560, 1680, ONDE) }) }),
+      h('circle', { cx: 208, cy: 250, r: 2.6, fill: S, style: Object.assign(box('50% 50%'), { animation: A('mm-drop', 320, 1500, REB) }) }),
+      h('circle', { cx: 214, cy: 240, r: 1.6, fill: S, style: Object.assign(box('50% 50%'), { animation: A('mm-drop', 320, 1590, REB) }) })
+    ));
+  container.innerHTML = '';
+  container.appendChild(svg);
+}
+
+// --- Cartes ---
+function createArticleCard(article, i = 0) {
+  const d = domainOf(article.category);
   return `
-    <article class="card fade-in">
-      <a href="article.html?slug=${article.slug}" class="card__image-wrapper">
-        <img src="${article.image}" alt="${article.title}" class="card__image" loading="lazy">
-      </a>
-      <div class="card__body">
-        <div class="card__meta">
-          <span class="card__category">${article.category}</span>
-          <span>${ICONS.calendar} ${formatDate(article.date)}</span>
-        </div>
-        <h3 class="card__title"><a href="article.html?slug=${article.slug}">${article.title}</a></h3>
-        <p class="card__excerpt">${article.excerpt}</p>
-        <div class="card__footer">
-          <span class="badge">${ICONS.clock} ${article.readTime} min de lecture</span>
-          <a href="article.html?slug=${article.slug}" class="btn btn--sm btn--secondary">Lire →</a>
-        </div>
+    <a href="article.html?slug=${encodeURIComponent(article.slug)}" class="acard" data-reveal="" data-i="${i % 3}">
+      ${archArt(d, glyphOf(article.title))}
+      <div class="acard__body">
+        <span class="kick">${esc(article.category)}<small> · ${article.readTime} min</small></span>
+        <h3 class="acard__title">${esc(article.title)}</h3>
+        <p class="acard__ex">${esc(article.excerpt)}</p>
+        <span class="acard__date">${formatDate(article.date, true)}</span>
       </div>
-    </article>
-  `;
+    </a>`;
 }
 
-// --- Video Card ---
-function createVideoCard(video) {
+function createFeaturedArticle(article) {
+  const d = domainOf(article.category);
   return `
-    <article class="card video-card fade-in">
-      <a href="video.html?slug=${video.slug}" class="card__image-wrapper">
-        <img src="${video.thumbnail}" alt="${video.title}" class="card__image" loading="lazy">
-        <div class="play-icon">${ICONS.play}</div>
-        ${video.duration ? `<span class="card__duration">${video.duration}</span>` : ''}
-      </a>
-      <div class="card__body">
-        <div class="card__meta">
-          <span class="card__category">${video.category}</span>
-          <span>${ICONS.calendar} ${formatDate(video.date)}</span>
-        </div>
-        <h3 class="card__title"><a href="video.html?slug=${video.slug}">${video.title}</a></h3>
-        <p class="card__excerpt">${video.description}</p>
+    <a href="article.html?slug=${encodeURIComponent(article.slug)}" class="feature" data-reveal="">
+      <div class="arch-art arch-art--${d} feature__art">
+        <div class="arch-art__a"><div class="arch-art__b"><div class="arch-art__c"><span>${esc(glyphOf(article.title))}</span></div></div></div>
+        <span class="badge-new"><span class="star">${ICONS.star}</span>Nouveau</span>
       </div>
-    </article>
-  `;
+      <div class="feature__body">
+        <span class="tag">${esc(DOMAIN_LABEL[d])} · ${esc(article.category)}</span>
+        <h3 class="feature__title">${esc(article.title)}</h3>
+        <p class="feature__ex">${esc(article.excerpt)}</p>
+        <span class="meta"><span>${formatDate(article.date)}</span><span>${article.readTime} min de lecture</span></span>
+        <span class="link-arrow">Lire l'article →</span>
+      </div>
+    </a>`;
 }
 
-// --- Resource Card ---
-function createResourceCard(resource) {
-  const downloads = getDownloads(resource.id);
+const COVER_TONES = ['lin', 'nuit', 'safran'];
+function videoCover(video, i, opts = {}) {
+  const tone = opts.tone || COVER_TONES[i % COVER_TONES.length];
   return `
-    <div class="resource-card fade-in">
-      <div class="resource-card__icon">
-        ${ICONS.file}
-      </div>
-      <div class="resource-card__content">
-        <h3 class="resource-card__title">${resource.title}</h3>
-        <p class="resource-card__desc">${resource.description}</p>
-        <div class="resource-card__meta">
-          <span>${resource.theme}</span>
-          <span>•</span>
-          <span>${resource.fileSize}</span>
-          <span>•</span>
-          <span>${downloads} téléchargements</span>
-        </div>
-      </div>
-      <div class="resource-card__action">
-        <a href="assets/downloads/${resource.fileName}" class="btn btn--accent btn--sm" onclick="trackDownload('${resource.id}')" download>
-          ${ICONS.download} Télécharger
-        </a>
-      </div>
-    </div>
-  `;
+    <div class="vcover vcover--${tone} ${opts.arch ? 'vcover--arch' : ''}">
+      ${opts.arch ? '<span class="vcover__arch"></span>' : ''}
+      <span class="vcover__t">${esc(video.title)}</span>
+      ${opts.noPlay ? '' : `<span class="play">${ICONS.play}</span>`}
+      ${video.duration ? `<span class="dur">${esc(video.duration)}</span>` : ''}
+    </div>`;
 }
 
-// --- Download Counter (localStorage) ---
-function getDownloads(id) {
-  const counts = JSON.parse(localStorage.getItem('downloadCounts') || '{}');
-  return counts[id] || 0;
+function createVideoCard(video, i = 0, opts = {}) {
+  return `
+    <a href="video.html?slug=${encodeURIComponent(video.slug)}" class="vcard" data-reveal="" data-i="${i % 3}">
+      ${videoCover(video, i, opts)}
+      <span class="vcard__kick">${esc(video.category)}<small> · ${formatDate(video.date, true)}</small></span>
+      <h3 class="vcard__title">${esc(video.title)}</h3>
+    </a>`;
 }
 
+function resourceHref(r) { return r.fileUrl || `assets/downloads/${r.fileName}`; }
+
+function createResourceRow(r, i = 0) {
+  const d = domainOf(r.theme);
+  const dl = (r.downloads || 0) + getDownloads(r.id);
+  return `
+    <div class="rrow" data-reveal="" data-i="${i}">
+      <span class="pdf-ico pdf-ico--${d}">PDF</span>
+      <div class="rrow__body">
+        <span class="kick">${esc(r.theme)}</span>
+        <span class="rrow__title">${esc(r.title)}</span>
+        <span class="meta"><span>${esc(r.fileSize || '')}</span>${dl ? `<span>${dl.toLocaleString('fr-FR')} téléchargements</span>` : ''}</span>
+      </div>
+      <a href="${resourceHref(r)}" class="btn btn--primary btn--sm" onclick="trackDownload('${esc(r.id)}')" download>${ICONS.download} Télécharger</a>
+    </div>`;
+}
+
+// Alias conservé pour compatibilité
+function createResourceCard(r) { return createResourceRow(r); }
+
+// --- Compteur de téléchargements (localStorage, best effort) ---
+function readCounts() {
+  try { return JSON.parse(localStorage.getItem('downloadCounts') || '{}'); } catch (e) { return {}; }
+}
+function getDownloads(id) { return readCounts()[id] || 0; }
 function trackDownload(id) {
-  const counts = JSON.parse(localStorage.getItem('downloadCounts') || '{}');
-  counts[id] = (counts[id] || 0) + 1;
-  localStorage.setItem('downloadCounts', JSON.stringify(counts));
+  try {
+    const counts = readCounts();
+    counts[id] = (counts[id] || 0) + 1;
+    localStorage.setItem('downloadCounts', JSON.stringify(counts));
+  } catch (e) { /* stockage indisponible */ }
 }
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-  initReveal();
-});
+document.addEventListener('DOMContentLoaded', () => initReveal());

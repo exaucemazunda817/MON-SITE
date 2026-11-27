@@ -1,82 +1,74 @@
-/* ============================================
-   RESOURCES.JS — Downloadable resources page
-   ============================================ */
+/* =====================================================
+   RESOURCES.JS — Bibliothèque de ressources à télécharger
+   ===================================================== */
 
 document.addEventListener('DOMContentLoaded', async () => {
   const resources = await fetchJSON('content/resources.json');
-  if (!resources.length) return;
-
   const container = document.getElementById('resources-list');
   if (!container) return;
 
-  renderResourcesList(resources, container);
+  const total = resources.reduce((s, r) => s + (r.downloads || 0) + getDownloads(r.id), 0);
+  const nEl = document.getElementById('stat-resources');
+  const dEl = document.getElementById('stat-downloads');
+  if (nEl) nEl.textContent = resources.length;
+  if (dEl) dEl.textContent = total.toLocaleString('fr-FR');
+
+  renderResources(resources, container);
 });
 
-function renderResourcesList(resources, container) {
-  // Get unique themes
-  const themes = ['Tous', ...new Set(resources.map(r => r.theme))];
+function renderResources(resources, container) {
+  const sorted = [...resources].sort((a, b) =>
+    Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
+    ((b.downloads || 0) + getDownloads(b.id)) - ((a.downloads || 0) + getDownloads(a.id)));
 
-  // Filter bar
+  const themes = [...new Set(sorted.map(r => r.theme))];
   const filterBar = document.getElementById('resources-filter');
+  const search = document.getElementById('resources-search');
+  const countEl = document.getElementById('resources-count');
+  let current = 'all', query = '';
+
   if (filterBar) {
-    filterBar.innerHTML = themes.map(theme =>
-      `<button class="filter-btn ${theme === 'Tous' ? 'active' : ''}" data-theme="${theme}">${theme}</button>`
-    ).join('');
-
-    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const theme = btn.dataset.theme;
-        const filtered = theme === 'Tous' ? resources : resources.filter(r => r.theme === theme);
-        renderResourceCards(filtered, container);
-      });
+    filterBar.innerHTML = `<button class="pill is-active" data-t="all" aria-pressed="true">Tout <small>${sorted.length}</small></button>` +
+      themes.map(t => `<button class="pill" data-t="${esc(t)}" aria-pressed="false">${esc(t)} <small>${sorted.filter(r => r.theme === t).length}</small></button>`).join('');
+    filterBar.addEventListener('click', e => {
+      const b = e.target.closest('.pill'); if (!b) return;
+      current = b.dataset.t;
+      filterBar.querySelectorAll('.pill').forEach(x => { x.classList.toggle('is-active', x === b); x.setAttribute('aria-pressed', x === b); });
+      draw();
     });
   }
+  if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); draw(); });
 
-  renderResourceCards(resources, container);
-}
-
-function renderResourceCards(resources, container) {
-  // Merge JSON download counts with localStorage counts
-  const mergedResources = resources.map(r => {
-    const localCount = getDownloads(r.id);
-    return { ...r, totalDownloads: r.downloads + localCount };
-  });
-
-  // Featured resources stay at the top, then sort the rest by downloads.
-  const sorted = [...mergedResources].sort((a, b) =>
-    Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
-    b.totalDownloads - a.totalDownloads
-  );
-
-  container.innerHTML = sorted.map(r => {
-    const downloads = r.totalDownloads;
+  function card(r, i) {
+    const d = domainOf(r.theme);
+    const dl = (r.downloads || 0) + getDownloads(r.id);
     return `
-      <div class="resource-card fade-in">
-        <div class="resource-card__icon">
-          ${ICONS.file}
+      <article class="rcard" data-reveal="" data-i="${i % 3}">
+        <div class="rcard__top tint-${d}">
+          <span class="rcard__type">${esc(r.theme)}</span>
+          <span class="rcard__glyph">${esc(glyphOf(r.title.replace(/^.*?:\s*/, '')))}</span>
         </div>
-        <div class="resource-card__content">
-          <h3 class="resource-card__title">${r.title}</h3>
-          <p class="resource-card__desc">${r.description}</p>
-          <div class="resource-card__meta">
-            <span>${r.theme}</span>
-            <span>•</span>
-            <span>${r.fileSize}</span>
-            <span>•</span>
-            <span>${downloads} téléchargements</span>
+        <div class="rcard__body">
+          <span class="kick">${esc(DOMAIN_LABEL[d])}</span>
+          <h3 class="rcard__title">${esc(r.title)}</h3>
+          <p class="rcard__desc">${esc(r.description)}</p>
+          <div class="rcard__stats">
+            <div><b>PDF</b><span>format</span></div>
+            <div><b>${esc(r.fileSize || '—')}</b><span>taille</span></div>
+            <div><b>${dl.toLocaleString('fr-FR')}</b><span>téléchargements</span></div>
           </div>
+          <a href="${resourceHref(r)}" class="btn btn--primary btn--sm" onclick="trackDownload('${esc(r.id)}')" download>${ICONS.download} Télécharger le PDF</a>
         </div>
-        <div class="resource-card__action">
-          <a href="assets/downloads/${r.fileName}" class="btn btn--accent btn--sm" onclick="trackDownload('${r.id}')" download>
-            ${ICONS.download} Télécharger
-          </a>
-        </div>
-      </div>
-    `;
-  }).join('');
+      </article>`;
+  }
 
-  initReveal();
+  function draw() {
+    const list = sorted.filter(r =>
+      (current === 'all' || r.theme === current) &&
+      (!query || (r.title + ' ' + r.description + ' ' + r.theme).toLowerCase().includes(query)));
+    if (countEl) countEl.innerHTML = `<b>${list.length}</b> ressource${list.length > 1 ? 's' : ''}`;
+    container.innerHTML = list.length ? list.map(card).join('') : '<p class="empty">Aucune ressource ne correspond à votre recherche.</p>';
+    initReveal();
+  }
+  draw();
 }

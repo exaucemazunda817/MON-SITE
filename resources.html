@@ -3,53 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ressources & Fiches à télécharger — MonsieurMazunda</title>
-  <meta name="description" content="Téléchargez gratuitement des fiches pratiques, checklists et templates pour développer votre activité digitale.">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <title>Ressources à télécharger — Monsieur Mazunda</title>
+  <meta name="description" content="Téléchargez gratuitement des fiches pratiques, études bibliques et guides en PDF proposés par Monsieur Mazunda.">
+  <meta name="author" content="Monsieur Mazunda">
+  <meta name="theme-color" content="#F4EFE6">
+  <meta property="og:title" content="Ressources à télécharger — Monsieur Mazunda">
+  <meta property="og:description" content="Téléchargez gratuitement des fiches pratiques, études bibliques et guides en PDF proposés par Monsieur Mazunda.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://monsieurmazunda.site/resources.html">
+  <meta property="og:image" content="https://monsieurmazunda.site/assets/images/portrait.jpg">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/icone-app.svg">
+  <link rel="icon" type="image/png" href="assets/brand/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body>
 
   <div id="site-header"></div>
 
   <main>
-    <section class="page-header">
-      <div class="container">
-        <h1>Ressources gratuites</h1>
-        <p>Des fiches pratiques et templates à télécharger pour passer à l'action.</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="filter-bar" id="resources-filter">
-          <!-- Filters injected by JS -->
+    <section class="wrap">
+      <div class="dome stripes-soft">
+        <div>
+          <span class="eyebrow eyebrow--safran">Bibliothèque gratuite</span>
+          <h1 class="h1" style="margin-top:18px">Ressources à emporter</h1>
+          <p class="lead">Des fiches pratiques ainsi que des livres gratuits, en PDF, pour vous aider à passer à un autre niveau.</p>
         </div>
-        <div id="resources-list" style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-md);">
-          <div class="loading"><div class="loading__spinner"></div></div>
+        <div class="dome__stats">
+          <div class="stat"><b id="stat-resources">–</b><span>ressources</span></div>
+          <div class="stat"><b id="stat-downloads">–</b><span>téléchargements</span></div>
+          <div class="stat"><b>0 F</b><span>toujours gratuit</span></div>
         </div>
       </div>
     </section>
 
-    <!-- Newsletter CTA -->
-    <section class="section section--alt">
-      <div class="container">
-        <div class="newsletter-cta reveal">
-          <h3>Soyez informé des nouvelles ressources</h3>
-          <p>Inscrivez-vous pour recevoir les nouvelles fiches et templates directement dans votre boîte mail.</p>
-          <form class="newsletter-form" id="newsletterForm">
-            <input type="email" name="email" placeholder="Votre adresse email" required>
-            <button type="submit">S'inscrire</button>
-          </form>
-          <p id="newsletterMessage" style="margin-top: var(--space-sm); font-size: var(--fs-sm);"></p>
+    <section class="wrap" style="padding-bottom:64px">
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <label for="resources-search" class="sr-only">Rechercher une ressource</label>
+          <input type="search" id="resources-search" placeholder="Rechercher une ressource…" autocomplete="off">
+          <span class="count" id="resources-count" aria-live="polite"></span>
         </div>
+        <div class="pills" id="resources-filter" role="group" aria-label="Filtrer par thème"></div>
+      </div>
+      <div class="grid-3" id="resources-list"><div class="loading"><div class="loading__spinner"></div></div></div>
+    </section>
+
+    <section class="wrap sec" style="padding-top:64px">
+      <div class="nl" data-reveal="">
+        <img src="assets/brand/monogramme-clair.svg" alt="" class="nl__mono">
+        <h2 class="h2">Soyez informé des nouvelles ressources</h2>
+        <p class="lead" style="font-size:18px">Inscrivez-vous pour recevoir les nouvelles fiches et les nouveaux livres directement dans votre boîte mail.</p>
+        <form id="newsletterForm">
+          <label for="nl-email" class="sr-only">Adresse e-mail</label>
+          <input id="nl-email" class="field-input" type="email" name="email" placeholder="Votre adresse e-mail" required>
+          <button type="submit" class="btn btn--primary">Je m'inscris</button>
+        </form>
+        <span class="nl__msg" id="newsletterMessage" role="status"></span>
+        <span class="nl__note">Votre adresse sert uniquement à l'envoi des nouveautés. Désinscription en un clic.</span>
       </div>
     </section>
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="js/main.js?v=10"></script>
-  <script src="js/resources.js"></script>
+  <script src="js/main.js?v=20"></script>
+  <script src="js/resources.js?v=20"></script>
   <script>
     initLayout('resources');
   </script>
