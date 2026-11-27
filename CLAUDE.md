@@ -35,5 +35,5 @@ Toujours répondre en français.
 - Photo de l'événement non utilisée (site gardé léger) ; À propos utilise la photo studio.
 
 ## Problèmes connus
-- Liens de téléchargement cassés (déjà avant la refonte) : `strategie-digitale-guide.pdf`, `checklist-seo-50-points.pdf`, `calendrier-editorial-template.pdf` sont listés dans `content/resources.json` mais absents de `assets/downloads/`. Ajouter les fichiers ou retirer ces entrées.
+- (Réglé le 27/11/2026) Les 3 ressources sans fichier PDF (stratégie digitale, checklist SEO, calendrier éditorial) ont été retirées de `content/resources.json` à la demande de Mazunda. Pour en remettre une : déposer le PDF dans `assets/downloads/` puis ajouter sa fiche.
 - `sitemap.xml` inchangé.
