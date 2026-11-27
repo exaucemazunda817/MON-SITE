@@ -13,17 +13,13 @@ Toujours répondre en français.
 - Formes : arches (`border-radius: 999px 999px 16px 16px`), boutons `26px 26px 8px 8px`, rayures fines sur les bandes sombres.
 - Signature de marque : « Enseignant · Juriste · Auteur ». Devise : « Partager, former, inspirer. »
 
-## État au 23 novembre 2026
-- Refonte complète faite (nouveau design appliqué aux 9 pages : index, articles, article, videos, video, resources, services, about, contact), testée desktop + mobile.
-- Contenu existant conservé à l'identique (articles, vidéos YouTube, ressources, services, textes, liens réseaux, Formspree `xoeajrbn`, WhatsApp +243 828 516 026).
-- **PAS ENCORE EN LIGNE** : Vercel a refusé la mise en ligne (erreur 402 `resource_creation_blocked` : solde impayé sur l'équipe MAZUNDA). Le site en ligne est toujours l'ancien design.
-- **PAS ENCORE SUR GITHUB** : l'accès GitHub de la session Cowork ne fonctionnait pas ; les fichiers ont été livrés dans `site-monsieur-mazunda.zip`.
-- Aperçu privé du nouveau site (sans vidéos/formulaires/téléchargements) : artifact `635941e9-6608-4cb2-b9f9-869afc633568` — https://claude.ai/artifact/DGYYJNWQ1JnAF99Qk6Wycb (contient aussi tous les fichiers du site, sauf le PDF et `monsieur-mazunda.png` déjà présents sur GitHub).
-
-## Pour reprendre (une fois le paiement Vercel réglé)
-1. Récupérer les fichiers (zip, ou l'artifact d'aperçu ci-dessus) et les mettre dans le dépôt `MON-SITE`, puis commit + push sur `main` → Vercel déploie automatiquement.
-2. Sinon, déployer directement via l'outil Vercel `create_deployment` (projet `monsieur-mazunda`, `target: production`, `framework: null`) en référençant les fichiers par sha + taille ; téléverser ceux que Vercel signale manquants. Puis pousser quand même sur GitHub, sinon le prochain push écrasera le nouveau design.
-3. Vérifier monsieurmazunda.site sur ordinateur et téléphone (vidéos YouTube, formulaires Formspree, téléchargements).
+## État au 27 novembre 2026
+- Refonte « Le Seuil » **EN LIGNE** sur monsieurmazunda.site et www (commit de fusion `8ce7a3d`, déploiement `dpl_Cx6REvQdHn3B8RDz3y1CUCXGpkD6`). Le blocage de facturation Vercel (402) du 23/11 est levé.
+- Copie de travail : ce dossier (`~/Documents/Mazunda/05-Site-Personnel/MON-SITE`). L'ancienne copie `~/Downloads/site-monsieur-mazunda` n'est plus utile.
+- Contenu existant conservé (articles, vidéos YouTube, ressources, services, textes, liens réseaux, Formspree `xoeajrbn`, WhatsApp +243 828 516 026).
+- `vercel.json` : en-têtes de sécurité (nosniff, X-Frame-Options SAMEORIGIN, Referrer-Policy, Permissions-Policy, HSTS), vérifiés en ligne.
+- Publier : branche → push → vérifier l'aperçu Vercel (protégé par connexion : passer par `get_access_to_vercel_url`) → fusion dans `main` avec l'accord de Mazunda → Vercel déploie seul.
+- À vérifier par Mazunda sur téléphone/Chrome : lecture des vidéos YouTube (le navigateur intégré de Claude ne charge pas YouTube) et envoi du formulaire de contact.
 
 ## Structure du code
 - `css/style.css` : tout le design (variables de la charte en `:root`, responsive à 1180 / 1024 / 760 px).
