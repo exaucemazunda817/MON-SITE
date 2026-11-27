@@ -359,7 +359,7 @@ p { margin: 0; }
 .rcard__body { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .rcard__title { font-family: var(--serif); font-size: 26px; line-height: 1.18; }
 .rcard__desc { font-size: 15px; line-height: 1.55; color: var(--ink-2); }
-.rcard__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px 0; margin-top: auto; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.rcard__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 12px 0; margin-top: auto; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .rcard__stats b { display: block; font-size: 16px; }
 .rcard__stats span { font-size: 13px; color: var(--muted); }
 .rcard .btn { width: 100%; margin-top: 8px; }

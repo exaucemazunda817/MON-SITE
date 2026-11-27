@@ -403,7 +403,7 @@ function createResourceRow(r, i = 0) {
       <div class="rrow__body">
         <span class="kick">${esc(r.theme)}</span>
         <span class="rrow__title">${esc(r.title)}</span>
-        <span class="meta"><span>${esc(r.fileSize || '')}</span>${dl ? `<span>${dl.toLocaleString('fr-FR')} téléchargements</span>` : ''}</span>
+        <span class="meta"><span>${esc(r.fileSize || '')}</span></span>
       </div>
       <a href="${resourceHref(r)}" class="btn btn--primary btn--sm" onclick="trackDownload('${esc(r.id)}')" download>${ICONS.download} Télécharger</a>
     </div>`;

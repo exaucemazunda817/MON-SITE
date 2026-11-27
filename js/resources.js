@@ -7,11 +7,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('resources-list');
   if (!container) return;
 
-  const total = resources.reduce((s, r) => s + (r.downloads || 0) + getDownloads(r.id), 0);
   const nEl = document.getElementById('stat-resources');
-  const dEl = document.getElementById('stat-downloads');
+  const nLabel = document.getElementById('stat-resources-label');
   if (nEl) nEl.textContent = resources.length;
-  if (dEl) dEl.textContent = total.toLocaleString('fr-FR');
+  if (nLabel) nLabel.textContent = resources.length > 1 ? 'ressources' : 'ressource';
 
   renderResources(resources, container);
 });
@@ -55,7 +54,6 @@ function renderResources(resources, container) {
           <div class="rcard__stats">
             <div><b>PDF</b><span>format</span></div>
             <div><b>${esc(r.fileSize || '—')}</b><span>taille</span></div>
-            <div><b>${dl.toLocaleString('fr-FR')}</b><span>téléchargements</span></div>
           </div>
           <a href="${resourceHref(r)}" class="btn btn--primary btn--sm" onclick="trackDownload('${esc(r.id)}')" download>${ICONS.download} Télécharger le PDF</a>
         </div>
